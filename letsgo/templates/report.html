@@ -1,0 +1,204 @@
+<!-- templates/home.html -->
+{% extends "base.html" %} {% block content %} {% load static %}
+<div class="container w-75">
+  <h1 class="display-3">Animal Data</h1>
+  <p>
+    This project utilizes Logistic Regression to predict whether an animal has
+    been domesticated or not based on its attributes. The predictor attributes we 
+    have selected are <i>predator</i>, <i>aquatic</i>, <i>hair</i>, <i>class_type_1</i>,
+    <i>milk</i>, <i>eggs</i>, and <i>breathes</i>.
+  </p>
+
+  <br/>
+  <h1 class="display-5">Initial Data and Data Processing</h1>
+  <p>
+    The dataset includes 101 rows of data each representing a different animal.
+    The columns include:
+  </p>
+  <ul>
+    <li>animal_name</li>
+    <li>hair</li>
+    <li>feathers</li>
+    <li>milk</li>
+    <li>airborne</li>
+    <li>aquatic</li>
+    <li>predator</li>
+    <li>toothed</li>
+    <li>backbobe</li>
+    <li>breathes</li>
+    <li>venomous</li>
+    <li>fins</li>
+    <li>legs</li>
+    <li>tail</li>
+    <li><b>domestic</b> (our target)</li>
+    <li>catsize</li>
+    <li>class_type</li>
+  </ul>
+  <p>
+    All columns barring the <i>animal_name</i> and <i>class_type</i> columns are
+    binary columns.
+  </p>
+  <p>
+    The <i>class_type</i> row represents values from 1 to 7, with the values
+    representing Mammal, Bird, Reptile, Fish, Amphibian, Bug, and Invertebrate
+    respectively.
+  </p>
+  <p>
+    The overall dataset is very clean and doesn't have any missing cells or
+    rows, and the only pre-processing we will need to perform will be converting
+    <i>class_type</i> into dummy variables to better use it as a predictor.
+    <i>class_type</i> is converted into <i>class_type_X</i>, with X representing
+    its initial value and the cell values representing whether the row was that
+    class type or not.
+  </p>
+
+  <br/>
+  <h1 class="display-5">Exploratory Data Analysis</h1>
+  <p>
+    To start off our data analysis, it's good to look at the general
+    distribution of values for each column so that we have an idea of how often
+    we'll see each column be switched on and off. We count the frequencies of
+    each unique value within each column, and generate a frequency bar chart to
+    have the overall picture. These bar charts are shown below:
+  </p>
+  <img
+    class="mx-auto my-2 d-block"
+    style="width: 500px; height: auto"
+    alt="frequency plot 1"
+    src="{% static 'freq_plot1.png' %}"
+  />
+  <img
+    class="mx-auto my-2 d-block"
+    style="width: 500px; height: auto"
+    alt="frequency plot 2"
+    src="{% static 'freq_plot2.png' %}"
+  />
+  <p>From our frequency plots, we can observe some general data trends:</p>
+  <ul>
+    <li>
+      Some plots are very skewed for either 'Yes' or 'No', such as
+      <i>venomous</i>, <i>fins</i>, <i>backbone</i>, and <i>breathes</i>
+    </li>
+    <li>
+      Other plots are relatively even, such as <i>hair</i>, <i>predator</i>, and
+      <i>toothed</i>
+    </li>
+    <li>
+      <i>class_type</i> seems heavily skewed towards mammals, which means we'll
+      be seeing it the most frequently
+    </li>
+    <li>We have a single animal with 5 legs, namely the starfish</li>
+  </ul>
+  <p>
+    The next thing we look at is the data's correlation heatmap. Through the
+    heatmap, we can compare each column with our target to see how strong the
+    correlation is between the two thus giving us insight as to which predictors
+    may potentially be helpful.
+  </p>
+  <img
+    class="mx-auto my-2 d-block"
+    style="width: 500px; height: auto"
+    alt="correlation heatmap 1"
+    src="{% static 'corr_plot.png' %}"
+  />
+  <p>
+    The initial correlation heatmap gives us some insight, but is a little
+    cluttered. As such, we isolate our target variable (<i>domestic</i>) and
+    redraw the correlation heatmap. This gives us a clearer picture as to the
+    predictors' relationships with our target.
+  </p>
+  <img
+    class="mx-auto my-2 d-block"
+    style="width: 500px; height: auto"
+    alt="correlation heatmap 2"
+    src="{% static 'corr_plot2.png' %}"
+  />
+  <p>
+    Through this output, we can observe that certain columns have a notedly
+    stronger correlation (whether negative or positive) with our target
+    variable, with some examples being <i>predator</i>, <i>aquatic</i>,
+    <i>hair</i>, <i>class_type</i>, and <i>milk</i>. Because these predictors
+    have the strongest correlation with our target variable, we can expect to
+    see them when performing our automated feature selection.
+  </p>
+  <h1 class="display-5">Model Training and Evaluation</h1>
+  <p>
+    We utilize the Forward Feature Selection algorithm, which helps us select
+    features by repeatedly selecting the feature that gives our model the
+    greatest increase in accuracy until we hit a feature limit. Through trial
+    and error, we ended up taking 7 different predictor variables for our final
+    model:
+  </p>
+  <ul>
+    <li><i>predator</i></li>
+    <li><i>aquatic</i></li>
+    <li><i>hair</i></li>
+    <li><i>milk</i></li>
+    <li><i>class_type_1</i></li>
+    <li><i>eggs</i></li>
+    <li><i>breathes</i></li>
+  </ul>
+  <p>
+    Using our logistic regresion model, we trained it using cross-fold
+    validation on 4 splits and took the best-performing model for use in our web
+    application. Scaling was not utilized in the model. The results for each split is displayed below:
+  </p>
+  <br/>
+  <table class="m-5 table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Model No.</th>
+        <th scope="col">Accuracy</th>
+        <th scope="col">Accuracy Std. Dev</th>
+        <th scope="col">Recall</th>
+        <th scope="col">Recall Std. Dev</th>
+        <th scope="col">F1</th>
+        <th scope="col">F1 Std. Dev</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td colspan="2">0.923</td>
+        <td colspan="2">1.000</td>
+        <td colspan="2">0.960</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td colspan="2">0.800</td>
+        <td colspan="2">1.000</td>
+        <td colspan="2">0.889</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td colspan="2">0.840</td>
+        <td colspan="2">1.000</td>
+        <td colspan="2">0.913</td>
+      </tr>
+      <tr>
+        <th scope="row">4</th>
+        <td colspan="2">0.920</td>
+        <td colspan="2">1.000</td>
+        <td colspan="2">0.958</td>
+      </tr>
+      <tr>
+        <th scope="row">Avg</th>
+        <td>0.871</td>
+        <td>0.053</td>
+        <td>1.000</td>
+        <td>0.000</td>
+        <td>0.930</td>
+        <td>0.030</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <h1 class="display-5">How do I use the predictor?</h1>
+  <p>To use the predictor, simply select the "Predict" button in the top navbar or
+    from the home page. Next, place your selections for each question based on what
+    kind of animal characteristics you'd like to represent. Lastly, click on the submit
+    button at the bottom and you will be redirected to a page showing your previous answers
+    as well as your result.
+  </p>
+</div>
+{% endblock content %}

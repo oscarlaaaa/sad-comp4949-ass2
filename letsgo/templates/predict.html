@@ -1,0 +1,100 @@
+<!-- templates/home.html -->
+{% extends "base.html" %}
+{% block content %}
+<div class="card w-75 mx-auto my-3 p-2 text-center">
+    <h2>Animal Questionnaire</h2>
+    <form class="m-auto" action="{% url 'predictPost' %}" method="post">
+        {% csrf_token %}
+        
+        <div class="m-3">
+            <h5>What animal type do you fit under?</h5>
+            <div class="m-1 btn-group btn-group-toggle" data-toggle="buttons">
+                <input type="radio" class="btn-check" name="options-type" id="options-type-1" value="1" autocomplete="off" checked>
+                <label class="btn btn-outline-primary" for="options-type-1">Mammal</label>
+                <input type="radio" class="btn-check" name="options-type" id="options-type-2" value="2" autocomplete="off" >
+                <label class="btn btn-outline-primary" for="options-type-2">Bird</label>
+                <input type="radio" class="btn-check" name="options-type" id="options-type-3" value="3" autocomplete="off" >
+                <label class="btn btn-outline-primary" for="options-type-3">Reptile</label>
+                <input type="radio" class="btn-check" name="options-type" id="options-type-4" value="4" autocomplete="off" >
+                <label class="btn btn-outline-primary" for="options-type-4">Fish</label>
+                <input type="radio" class="btn-check" name="options-type" id="options-type-5" value="5" autocomplete="off" >
+                <label class="btn btn-outline-primary" for="options-type-5">Amphibian</label>
+                <input type="radio" class="btn-check" name="options-type" id="options-type-6" value="6" autocomplete="off" >
+                <label class="btn btn-outline-primary" for="options-type-6">Bug</label>
+                <input type="radio" class="btn-check" name="options-type" id="options-type-7" value="7" autocomplete="off" >
+                <label class="btn btn-outline-primary" for="options-type-7">Invertebrate</label>
+            </div>
+        </div>
+
+        <div class="m-3 form-check">
+            <h5>Are you a predator?</h5>
+            <div class="m-1 btn-group btn-group-toggle" data-toggle="buttons">
+                <input type="radio" class="btn-check" name="options-predator" id="yes-predator" value="1" autocomplete="off" checked>
+                <label class="btn btn-outline-success" for="yes-predator">Yes</label>
+
+                <input type="radio" class="btn-check" name="options-predator" id="no-predator" value="0" autocomplete="off">
+                <label class="btn btn-outline-danger" for="no-predator">No</label>
+            </div>
+        </div>
+
+        <div class="m-3 form-check">
+            <h5>Are you an aquatic animal?</h5>
+            <div class="m-1 btn-group btn-group-toggle" data-toggle="buttons">
+                <input type="radio" class="btn-check" name="options-aquatic" id="yes-aquatic" value="1" autocomplete="off" checked>
+                <label class="btn btn-outline-success" for="yes-aquatic">Yes</label>
+
+                <input type="radio" class="btn-check" name="options-aquatic" id="no-aquatic" value="0" autocomplete="off">
+                <label class="btn btn-outline-danger" for="no-aquatic">No</label>
+            </div>
+        </div>
+
+        <div class="m-3 form-check">
+            <h5>Do you have hair?</h5>
+            <div class="m-1 btn-group btn-group-toggle" data-toggle="buttons">
+                <input type="radio" class="btn-check" name="options-hair" id="yes-hair" value="1" autocomplete="off" checked>
+                <label class="btn btn-outline-success" for="yes-hair">Yes</label>
+
+                <input type="radio" class="btn-check" name="options-hair" id="no-hair" value="0" autocomplete="off">
+                <label class="btn btn-outline-danger" for="no-hair">No</label>
+            </div>
+        </div>
+
+        <div class="m-3 form-check">
+            <h5>Do you produce milk?</h5>
+            <div class="m-1 btn-group btn-group-toggle" data-toggle="buttons">
+                <input type="radio" class="btn-check" name="options-milk" id="yes-milk" value="1" autocomplete="off" checked>
+                <label class="btn btn-outline-success" for="yes-milk">Yes</label>
+
+                <input type="radio" class="btn-check" name="options-milk" id="no-milk" value="0" autocomplete="off">
+                <label class="btn btn-outline-danger" for="no-milk">No</label>
+            </div>
+        </div>
+
+        <div class="m-3 form-check">
+            <h5>Do you lay eggs?</h5>
+            <div class="m-1 btn-group btn-group-toggle" data-toggle="buttons">
+                <input type="radio" class="btn-check" name="options-eggs" id="yes-eggs" value="1" autocomplete="off" checked>
+                <label class="btn btn-outline-success" for="yes-eggs">Yes</label>
+
+                <input type="radio" class="btn-check" name="options-eggs" id="no-eggs" value="0" autocomplete="off">
+                <label class="btn btn-outline-danger" for="no-eggs">No</label>
+            </div>
+        </div>
+
+        <div class="m-3 form-check">
+            <h5>Do you breathe in the air?</h5>
+            <div class="m-1 btn-group btn-group-toggle" data-toggle="buttons">
+                <input type="radio" class="btn-check" name="options-air" id="yes-air" value="1" autocomplete="off" checked>
+                <label class="btn btn-outline-success" for="yes-air">Yes</label>
+
+                <input type="radio" class="btn-check" name="options-air" id="no-air" value="0" autocomplete="off">
+                <label class="btn btn-outline-danger" for="no-air">No</label>
+            </div>
+        </div>
+
+        <div class="m-3">
+            <button type="submit" class="btn btn-info">Predict whether I would be domesticated!</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

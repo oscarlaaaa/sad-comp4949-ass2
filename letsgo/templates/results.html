@@ -1,0 +1,30 @@
+<!-- templates/home.html -->
+{% extends "base.html" %}
+{% block content %}
+<div class="card w-75 mx-auto my-3 p-2 text-center">
+    <h2>Animal Questionnaire</h2>
+        <h5>What animal type do you fit under?</h5>
+        <p>You selected: {{class_type}}</p>
+
+        <h5>Are you a predator?</h5>
+        <p>You selected: {{predator}}</p>
+
+        <h5>Are you an aquatic animal?</h5>
+        <p>You selected: {{aquatic}}</p>
+
+        <h5>Do you have hair?</h5>
+        <p>You selected: {{hair}}</p>
+
+        <h5>Do you produce milk?</h5>
+        <p>You selected: {{milk}}</p>
+
+        <h5>Do you lay eggs?</h5>
+        <p>You selected: {{eggs}}</p>
+
+        <h5>Do you breathe in the air?</h5>
+        <p>You selected: {{air}}</p>
+
+        <h3>Would you be domesticated: {{prediction}}!</h3>
+    </form>
+</div>
+{% endblock content %}

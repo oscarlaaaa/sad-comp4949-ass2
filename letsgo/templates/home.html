@@ -1,0 +1,20 @@
+<!-- templates/home.html -->
+{% extends "base.html" %} {% block content %}
+{% load static %}
+<div class="container my-5 d-flex">
+    <img class="my-auto mx-2" style="width: 200px; height: 200px;"  src="{% static 'cat.png' %}" alt="cat" />
+  <div class="w-75 mx-auto my-5">
+    <div>
+      <h1 class="display-3">If you were an animal, would you be domesticated?</h1>
+      <p>
+        Customize yourself as an animal, and find out whether you'd likely be a
+        domestic species or not!
+      </p>
+    </div>
+    <div>
+      <a class="btn btn-primary" href="{% url 'predict' %}">Predict me!</a>
+      <a class="btn btn-secondary" href="{% url 'report' %}">Learn more about my data</a>
+    </div>
+  </div>
+</div>
+{% endblock content %}
